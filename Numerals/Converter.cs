@@ -5,9 +5,12 @@ namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-        private static readonly string[] powersOfTen = new[] { "logi", "čuođi", "duhat" };
+        private static int PowerOfTen(int n) 
+        {
+            return (int)Math.Pow(10, (int)Math.Log10(n));
+        }
 
-        public static string ToNumeral(this int n, bool suppressTrailingZero = false, bool suppressLeadingOne = false)
+        public static string ToNumeral(this int n, bool suppressLeadingOne = false, bool suppressTrailingZero = false)
         {
             return n switch
             {
