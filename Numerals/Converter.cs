@@ -7,7 +7,7 @@ namespace Davvisámegillii.Numerals
     {
         public static string ToNumeral(this int number, bool suppressLeadingOne = false, bool suppressTrailingZero = false, bool plural = false)
         {
-            Func<int, string> divideAndRecurse = new(n =>
+            static string divideAndRecurse (int n)
             {
                 var denominator = (int)Math.Log10(n) switch
                 {
@@ -21,7 +21,7 @@ namespace Davvisámegillii.Numerals
                 var numerator = n / denominator;
 
                 return numerator.ToNumeral(suppressLeadingOne: true) + denominator.ToNumeral(plural:numerator>1) + (n % denominator).ToNumeral(suppressTrailingZero: true);
-            }); 
+            } 
 
             return number switch
             {
