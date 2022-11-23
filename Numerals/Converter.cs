@@ -5,7 +5,6 @@ namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-
         public static string ToNumeral(this int number, bool suppressLeadingOne = false, bool suppressTrailingZero = false, bool plural = false)
         {
             Func<int, string> divideAndRecurse = new(n =>
