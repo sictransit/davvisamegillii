@@ -3,38 +3,64 @@ using System.Text;
 
 namespace Davvisámegillii.Numerals
 {
-    public class Converter
+    public static class Converter
     {
-        public string ToNumeral(int n)
-        {
-            var numeral = new StringBuilder();
+        private static readonly string[] powersOfTen = new[] { "logi", "čuođi" };
 
+        public static string ToNumeral(this int n)
+        {
             if (n == 0)
             {
                 return Number(n);
             }
 
-            if (n < 10)
+            return Below1000(n);
+        }
+
+        private static string Below1000(int n)
+        {
+            var numeral = new StringBuilder();
+
+            if (n >= 100)
             {
-                numeral.Append(Number(n));
+                numeral.Append(PowerOfTens(2, n));
+
+                n %= 100;
             }
-            else if (n < 20)
+
+            if (n > 0)
             {
-                numeral.Append(Compound(n));
+                numeral.Append(Below100(n));
             }
-            else if (n < 100)
-            { 
-                numeral.Append(Tens(n % 10));
-                if (n%10!=0) 
-                {
-                    numeral.Append(Number(n % 10));
-                }
-            }            
 
             return numeral.ToString();
         }
 
-        private string Number(int n)
+        private static string Below100(int n)
+        {
+            var numeral = new StringBuilder();
+
+            if (n < 10)
+            {
+                numeral.Append(Number(n));
+            }
+            else if (n is > 10 and < 20)
+            {
+                numeral.Append(Compound(n));
+            }
+            else if (n < 100)
+            {
+                numeral.Append(PowerOfTens(1, n));
+                if (n % 10 != 0)
+                {
+                    numeral.Append(Number(n % 10));
+                }
+            }
+
+            return numeral.ToString();
+        }
+
+        private static string Number(int n)
         {
             return n switch
             {
@@ -42,7 +68,7 @@ namespace Davvisámegillii.Numerals
                 1 => "okta",
                 2 => "guokte",
                 3 => "golbma",
-                4 => "njeall",
+                4 => "njeallje",
                 5 => "vihtta",
                 6 => "guhtta",
                 7 => "čieža",
@@ -52,7 +78,7 @@ namespace Davvisámegillii.Numerals
             };
         }
 
-        private string Compound(int n) 
+        private static string Compound(int n) 
         {
             if (n is < 11 or > 19)
             {
@@ -62,21 +88,17 @@ namespace Davvisámegillii.Numerals
             return Number(n%10) + "nuppelohkái";
         }
 
-        private string Tens(int n) 
+        private static string PowerOfTens(int p,  int n) 
         {
-            if (n % 10 != 0)
+            n/=(int)Math.Pow(10, p);            
+
+            if (n is < 0 or > 9)
             {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
 
-            n/=10;
-
-            if (n is < 1 or > 9)
-            {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
-
-            return (n == 1 ? string.Empty : Number(n)) + "logi";
+            return (n == 1 ? string.Empty : Number(n)) + powersOfTen[p-1];
         }
+
     }
 }
