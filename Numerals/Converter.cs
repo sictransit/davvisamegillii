@@ -5,67 +5,14 @@ namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-        private static readonly string[] powersOfTen = new[] { "logi", "čuođi" };
+        private static readonly string[] powersOfTen = new[] { "logi", "čuođi", "duhat" };
 
-        public static string ToNumeral(this int n)
-        {
-            if (n == 0)
-            {
-                return Number(n);
-            }
-
-            return Below1000(n);
-        }
-
-        private static string Below1000(int n)
-        {
-            var numeral = new StringBuilder();
-
-            if (n >= 100)
-            {
-                numeral.Append(PowerOfTens(2, n));
-
-                n %= 100;
-            }
-
-            if (n > 0)
-            {
-                numeral.Append(Below100(n));
-            }
-
-            return numeral.ToString();
-        }
-
-        private static string Below100(int n)
-        {
-            var numeral = new StringBuilder();
-
-            if (n < 10)
-            {
-                numeral.Append(Number(n));
-            }
-            else if (n is > 10 and < 20)
-            {
-                numeral.Append(Compound(n));
-            }
-            else if (n < 100)
-            {
-                numeral.Append(PowerOfTens(1, n));
-                if (n % 10 != 0)
-                {
-                    numeral.Append(Number(n % 10));
-                }
-            }
-
-            return numeral.ToString();
-        }
-
-        private static string Number(int n)
+        public static string ToNumeral(this int n, bool suppressTrailingZero = false, bool suppressLeadingOne = false)
         {
             return n switch
             {
-                0 => "nolla",
-                1 => "okta",
+                0 =>  suppressTrailingZero ? string.Empty :"nolla",
+                1 => suppressLeadingOne ? string.Empty : "okta",
                 2 => "guokte",
                 3 => "golbma",
                 4 => "njeallje",
@@ -74,31 +21,15 @@ namespace Davvisámegillii.Numerals
                 7 => "čieža",
                 8 => "gávcci",
                 9 => "ovcci",
-                _ => throw new ArgumentOutOfRangeException(nameof(n)),
+                > 10 and < 20 => (n % 10).ToNumeral() + "nuppelohkái",
+                10 => "logi",
+                > 10 and < 100 => (n/10).ToNumeral(suppressLeadingOne:true) +10.ToNumeral()+ (n%10).ToNumeral(suppressTrailingZero:true) ,
+                100 => "čuođi",
+                > 100 and < 1000 => (n / 100).ToNumeral(suppressLeadingOne: true) + 100.ToNumeral() + (n % 100).ToNumeral(suppressTrailingZero: true),
+                1000 => "duhat",
+                > 1000 and < 1000000 => (n / 1000).ToNumeral(suppressLeadingOne: true) + 1000.ToNumeral() + (n % 1000).ToNumeral(suppressTrailingZero: true),
+                _ => throw new NotImplementedException($"unsupported number: {n}")
             };
         }
-
-        private static string Compound(int n) 
-        {
-            if (n is < 11 or > 19)
-            {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
-
-            return Number(n%10) + "nuppelohkái";
-        }
-
-        private static string PowerOfTens(int p,  int n) 
-        {
-            n/=(int)Math.Pow(10, p);            
-
-            if (n is < 0 or > 9)
-            {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
-
-            return (n == 1 ? string.Empty : Number(n)) + powersOfTen[p-1];
-        }
-
     }
 }
