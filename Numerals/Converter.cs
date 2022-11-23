@@ -5,14 +5,26 @@ namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-        private static int PowerOfTen(int n) 
-        {
-            return (int)Math.Pow(10, (int)Math.Log10(n));
-        }
 
-        public static string ToNumeral(this int n, bool suppressLeadingOne = false, bool suppressTrailingZero = false)
+        public static string ToNumeral(this int number, bool suppressLeadingOne = false, bool suppressTrailingZero = false, bool plural = false)
         {
-            return n switch
+            Func<int, string> divideAndRecurse = new(n =>
+            {
+                var denominator = (int)Math.Log10(n) switch
+                {
+                    1 => 10,
+                    2 => 100,
+                    >= 3 and < 6 => 1000,
+                    >= 6 and < 9 => 1000000,
+                    _ => throw new NotImplementedException(),
+                };
+
+                var numerator = n / denominator;
+
+                return numerator.ToNumeral(suppressLeadingOne: true) + denominator.ToNumeral(plural:numerator>1) + (n % denominator).ToNumeral(suppressTrailingZero: true);
+            }); 
+
+            return number switch
             {
                 0 =>  suppressTrailingZero ? string.Empty :"nolla",
                 1 => suppressLeadingOne ? string.Empty : "okta",
@@ -24,14 +36,12 @@ namespace Davvisámegillii.Numerals
                 7 => "čieža",
                 8 => "gávcci",
                 9 => "ovcci",
-                > 10 and < 20 => (n % 10).ToNumeral() + "nuppelohkái",
-                10 => "logi",
-                > 10 and < 100 => (n/10).ToNumeral(suppressLeadingOne:true) +10.ToNumeral()+ (n%10).ToNumeral(suppressTrailingZero:true) ,
+                > 10 and < 20 => (number % 10).ToNumeral() + "nuppelohkái",
+                10 => "logi",                
                 100 => "čuođi",
-                > 100 and < 1000 => (n / 100).ToNumeral(suppressLeadingOne: true) + 100.ToNumeral() + (n % 100).ToNumeral(suppressTrailingZero: true),
                 1000 => "duhat",
-                > 1000 and < 1000000 => (n / 1000).ToNumeral(suppressLeadingOne: true) + 1000.ToNumeral() + (n % 1000).ToNumeral(suppressTrailingZero: true),
-                _ => throw new NotImplementedException($"unsupported number: {n}")
+                1000000 => plural ? "miljovnna" : "miljon",
+                _ => divideAndRecurse(number)
             };
         }
     }

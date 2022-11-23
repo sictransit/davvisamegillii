@@ -38,6 +38,11 @@ namespace Davvisámegillii.Numerals.Tests
             Assert.AreEqual("guokteduhat", 2000.ToNumeral());
             Assert.AreEqual("vihttanuppelohkáiduhatokta", 15001.ToNumeral());
             Assert.AreEqual("čuođiguoktelogigolbmaduhatnjeallječuođivihttalogiguhtta", 123456.ToNumeral());
+
+            Assert.AreEqual("miljon", 1000000.ToNumeral());
+            Assert.AreEqual("miljončiežaduhatvihtta", 1007005.ToNumeral());
+            Assert.AreEqual("vihttamiljovnnaduhatguoktečuođigolbmalogi", 5001230.ToNumeral());
+            Assert.AreEqual("ovccičuođigávccilogičiežamiljovnnaguhttačuođivihttaloginjealljeduhatgolbmačuođiguoktelogiokta", 987654321.ToNumeral());
         }
     }
 }
