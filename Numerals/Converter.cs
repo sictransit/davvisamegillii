@@ -1,47 +1,50 @@
-﻿using System.Net.Http.Headers;
-using System.Text;
+﻿using Davvisámegillii.Numerals.Enums;
 
 namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-        public static string ToNumeral(this int number, bool suppressLeadingOne = false, bool suppressTrailingZero = false, bool plural = false)
+        public static string ToNumeral(this int number)
         {
-            static string divideAndRecurse (int n)
-            {
-                var denominator = (int)Math.Log10(n) switch
-                {
-                    1 => 10,
-                    2 => 100,
-                    >= 3 and < 6 => 1000,
-                    >= 6 and < 9 => 1000000,
-                    _ => throw new NotImplementedException(),
-                };
-
-                var numerator = n / denominator;
-
-                return numerator.ToNumeral(suppressLeadingOne: true) + denominator.ToNumeral(plural:numerator>1) + (n % denominator).ToNumeral(suppressTrailingZero: true);
-            } 
-
-            return number switch
-            {
-                0 =>  suppressTrailingZero ? string.Empty :"nolla",
-                1 => suppressLeadingOne ? string.Empty : "okta",
-                2 => "guokte",
-                3 => "golbma",
-                4 => "njeallje",
-                5 => "vihtta",
-                6 => "guhtta",
-                7 => "čieža",
-                8 => "gávcci",
-                9 => "ovcci",
-                > 10 and < 20 => (number % 10).ToNumeral() + "nuppelohkái",
-                10 => "logi",                
-                100 => "čuođi",
-                1000 => "duhat",
-                1000000 => plural ? "miljovnna" : "miljon",
-                _ => divideAndRecurse(number)
-            };
+            return number.ToNumeral(NumeralFlags.None);
         }
+
+        private static string DivideAndContinue(int n)
+        {
+            var denominator = (int)Math.Log10(n) switch
+            {
+                1 => 10,
+                2 => 100,
+                < 6 => 1_000,
+                < 9 => 1_000_000,
+                9 => 1_000_000_000,
+                _ => throw new NotImplementedException(),
+            };
+
+            var numerator = n / denominator;
+
+            return numerator.ToNumeral(NumeralFlags.SuppressLeadingOne) + denominator.ToNumeral(numerator > 1 ? NumeralFlags.Plural : NumeralFlags.None) + (n % denominator).ToNumeral(NumeralFlags.SuppressTrailingZero);
+        }
+
+        private static string ToNumeral(this int number, NumeralFlags flags) => number switch
+        {
+            0 => flags.HasFlag(NumeralFlags.SuppressTrailingZero) ? string.Empty : "nolla",
+            1 => flags.HasFlag(NumeralFlags.SuppressLeadingOne) ? string.Empty : "okta",
+            2 => "guokte",
+            3 => "golbma",
+            4 => "njeallje",
+            5 => "vihtta",
+            6 => "guhtta",
+            7 => "čieža",
+            8 => "gávcci",
+            9 => "ovcci",
+            > 10 and < 20 => (number % 10).ToNumeral() + "nuppelohkái",
+            10 => "logi",
+            100 => flags.HasFlag(NumeralFlags.Accusative) ? "čuođi" : "čuohti",
+            1_000 => "duhát",
+            1_000_000 => flags.HasFlag(NumeralFlags.Plural) ? "miljovnna" : "miljon",
+            1_000_000_000 => flags.HasFlag(NumeralFlags.Plural) ? "miljárdda" : "miljárda",
+            _ => DivideAndContinue(number)
+        };
     }
 }

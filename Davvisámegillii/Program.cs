@@ -6,7 +6,7 @@ namespace Davvisámegillii
     {
         static void Main(string[] args)
         {
-            for (int i = 0; i < 1000000; i++)
+            for (int i = 0; i < int.MaxValue; i++)
             {
                 Console.WriteLine($"{i}: {i.ToNumeral()}");
             }
