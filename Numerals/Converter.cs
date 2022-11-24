@@ -6,7 +6,7 @@ namespace Davvisámegillii.Numerals
     {
         public static string ToNumeral(this int number)
         {
-            var parts = Convert(number).ToArray();
+            var parts = SplitNumber(number).ToArray();
 
             var numeral = new StringBuilder();
 
@@ -21,50 +21,39 @@ namespace Davvisámegillii.Numerals
             return numeral.ToString();
         }
 
-        private static int PowerOfTen(int n) => (int)Math.Log10(n) switch
+        private static IEnumerable<int> SplitNumber(int n)
         {
-            1 => 10,
-            2 => 100,
-            < 6 => 1_000,
-            < 9 => 1_000_000,
-            9 => 1_000_000_000,
-            _ => throw new NotImplementedException(),
-        };
-
-        private static IEnumerable<int> Convert(int n)
-        {
-            if ((n < 10) || (n is > 10 and < 20))
+            if ((n < 10) || (n is > 10 and < 20) )
             {
                 yield return n;
             }
             else
             {
-                var powerOfTen = PowerOfTen(n);
+                var powerOfTen = (int)Math.Log10(n) switch
+                {
+                    1 => 10,
+                    2 => 100,
+                    < 6 => 1_000,
+                    < 9 => 1_000_000,
+                    9 => 1_000_000_000,
+                    _ => throw new NotImplementedException(),
+                };
 
-                if (n == powerOfTen)
+                if (n / powerOfTen > 1)
                 {
-                    yield return n;
-                }
-                else
-                {
-                    var multiplier = n / powerOfTen;
-                    if (multiplier > 1)
+                    foreach (var number in SplitNumber(n / powerOfTen))
                     {
-                        foreach (var numeral in Convert(multiplier))
-                        {
-                            yield return numeral;
-                        }
+                        yield return number;
                     }
+                }
 
-                    yield return powerOfTen;
-
-                    var remainder = n % powerOfTen;
-                    if (remainder != 0)
+                yield return powerOfTen;
+                
+                if (n % powerOfTen != 0)
+                {
+                    foreach (var number in SplitNumber(n % powerOfTen))
                     {
-                        foreach (var numeral in Convert(remainder))
-                        {
-                            yield return numeral;
-                        }
+                        yield return number;
                     }
                 }
             }
