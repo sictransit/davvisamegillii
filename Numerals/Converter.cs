@@ -14,7 +14,7 @@ namespace Davvisámegillii.Numerals
             for (int p = 0; p < parts.Length; p++)
             {
                 var n = parts[p];
-                numeral.Append(n.ToText(plural, accusative: p < parts.Length - 1, adverb: adverb && p == parts.Length-1));
+                numeral.Append(n.ToText(plural, accusative: p < parts.Length - 1, adverb: adverb && p == parts.Length - 1));
                 plural = n > 1;
             }
 
@@ -23,7 +23,7 @@ namespace Davvisámegillii.Numerals
 
         private static IEnumerable<int> SplitNumber(int n)
         {
-            if ((n < 10) || (n is > 10 and < 20) )
+            if ((n < 10) || (n is > 10 and < 20))
             {
                 yield return n;
             }
@@ -48,7 +48,7 @@ namespace Davvisámegillii.Numerals
                 }
 
                 yield return powerOfTen;
-                
+
                 if (n % powerOfTen != 0)
                 {
                     foreach (var number in SplitNumber(n % powerOfTen))
@@ -61,8 +61,8 @@ namespace Davvisámegillii.Numerals
 
         private static string ToText(this int n, bool plural = false, bool accusative = false, bool adverb = false) => n switch
         {
-            0 =>  "nolla",
-            1 => adverb ? "vuosttaš" :"okta",
+            0 => "nolla",
+            1 => adverb ? "vuosttaš" : "okta",
             2 => adverb ? "nubbi" : "guokte",
             3 => adverb ? "goalmmát" : "golbma",
             4 => adverb ? "njealját" : "njeallje",
@@ -71,7 +71,7 @@ namespace Davvisámegillii.Numerals
             7 => adverb ? "čihččet" : "čieža",
             8 => adverb ? "gávccát" : "gávcci",
             9 => adverb ? "ovccát" : "ovcci",
-            > 10 and < 20 => (n % 10).ToText() + (adverb ? "nuppelogát":"nuppelohkái"),
+            > 10 and < 20 => (n % 10).ToText() + (adverb ? "nuppelogát" : "nuppelohkái"),
             10 => adverb ? "logát" : "logi",
             100 => adverb ? "čuođát" : (accusative ? "čuođi" : "čuohti"),
             1_000 => "duhát",

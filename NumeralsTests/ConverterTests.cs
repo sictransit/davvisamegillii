@@ -28,7 +28,7 @@ namespace Davvisámegillii.Numerals.Tests
             Assert.AreEqual("duhátlogi", 1_010.ToNumeral());
             Assert.AreEqual("duhátgolbmanuppelohkái", 1_013.ToNumeral());
             Assert.AreEqual("duhátčuođiovccinuppelohkái", 1_119.ToNumeral());
-            Assert.AreEqual("duhátčuođiovccinuppelohkái", 1_723.ToNumeral());
+            Assert.AreEqual("duhátčiežačuođiguoktelogigolbma", 1_723.ToNumeral());
             Assert.AreEqual("guokteduhát", 2_000.ToNumeral());
             Assert.AreEqual("vihttanuppelohkáiduhátokta", 15_001.ToNumeral());
             Assert.AreEqual("čuođiguoktelogigolbmaduhátnjeallječuođivihttalogiguhtta", 123_456.ToNumeral());
