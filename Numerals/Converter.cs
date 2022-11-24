@@ -1,4 +1,4 @@
-﻿using Davvisámegillii.Numerals.Enums;
+﻿using System.Text;
 
 namespace Davvisámegillii.Numerals
 {
@@ -6,30 +6,74 @@ namespace Davvisámegillii.Numerals
     {
         public static string ToNumeral(this int number)
         {
-            return number.ToNumeral(NumeralFlags.None);
-        }
+            var parts = Convert(number).ToArray();
 
-        private static string DivideAndContinue(int n)
-        {
-            var denominator = (int)Math.Log10(n) switch
+            var numeral = new StringBuilder();
+
+            var plural = false;
+            for (int p = 0; p < parts.Length; p++)
             {
-                1 => 10,
-                2 => 100,
-                < 6 => 1_000,
-                < 9 => 1_000_000,
-                9 => 1_000_000_000,
-                _ => throw new NotImplementedException(),
-            };
+                var n = parts[p];
+                numeral.Append(n.ToText(plural, p < parts.Length - 1));
+                plural = n > 1;
+            }
 
-            var numerator = n / denominator;
-
-            return numerator.ToNumeral(NumeralFlags.SuppressLeadingOne) + denominator.ToNumeral(numerator > 1 ? NumeralFlags.Plural : NumeralFlags.None) + (n % denominator).ToNumeral(NumeralFlags.SuppressTrailingZero);
+            return numeral.ToString();
         }
 
-        private static string ToNumeral(this int number, NumeralFlags flags) => number switch
+        private static int PowerOfTen(int n) => (int)Math.Log10(n) switch
         {
-            0 => flags.HasFlag(NumeralFlags.SuppressTrailingZero) ? string.Empty : "nolla",
-            1 => flags.HasFlag(NumeralFlags.SuppressLeadingOne) ? string.Empty : "okta",
+            1 => 10,
+            2 => 100,
+            < 6 => 1_000,
+            < 9 => 1_000_000,
+            9 => 1_000_000_000,
+            _ => throw new NotImplementedException(),
+        };
+
+        private static IEnumerable<int> Convert(int n)
+        {
+            if ((n < 10) || (n is > 10 and < 20))
+            {
+                yield return n;
+            }
+            else
+            {
+                var powerOfTen = PowerOfTen(n);
+
+                if (n == powerOfTen)
+                {
+                    yield return n;
+                }
+                else
+                {
+                    var multiplier = n / powerOfTen;
+                    if (multiplier > 1)
+                    {
+                        foreach (var numeral in Convert(multiplier))
+                        {
+                            yield return numeral;
+                        }
+                    }
+
+                    yield return powerOfTen;
+
+                    var remainder = n % powerOfTen;
+                    if (remainder != 0)
+                    {
+                        foreach (var numeral in Convert(remainder))
+                        {
+                            yield return numeral;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static string ToText(this int n, bool plural = false, bool accusative = false) => n switch
+        {
+            0 => "nolla",
+            1 => "okta",
             2 => "guokte",
             3 => "golbma",
             4 => "njeallje",
@@ -38,13 +82,13 @@ namespace Davvisámegillii.Numerals
             7 => "čieža",
             8 => "gávcci",
             9 => "ovcci",
-            > 10 and < 20 => (number % 10).ToNumeral() + "nuppelohkái",
+            > 10 and < 20 => (n % 10).ToText() + "nuppelohkái",
             10 => "logi",
-            100 => flags.HasFlag(NumeralFlags.Accusative) ? "čuođi" : "čuohti",
+            100 => accusative ? "čuođi" : "čuohti",
             1_000 => "duhát",
-            1_000_000 => flags.HasFlag(NumeralFlags.Plural) ? "miljovnna" : "miljon",
-            1_000_000_000 => flags.HasFlag(NumeralFlags.Plural) ? "miljárdda" : "miljárda",
-            _ => DivideAndContinue(number)
+            1_000_000 => plural ? "miljovnna" : "miljon",
+            1_000_000_000 => plural ? "miljárdda" : "miljárda",
+            _ => throw new ArgumentOutOfRangeException(nameof(n), n.ToString()),
         };
     }
 }

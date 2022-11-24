@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 
 namespace Davvisámegillii.Numerals.Tests
 {
@@ -19,7 +18,7 @@ namespace Davvisámegillii.Numerals.Tests
             Assert.AreEqual("ovccilogi", 90.ToNumeral());
             Assert.AreEqual("ovccilogiovcci", 99.ToNumeral());
 
-            Assert.AreEqual("čuođi", 100.ToNumeral());
+            Assert.AreEqual("čuohti", 100.ToNumeral());
             Assert.AreEqual("čuođiokta", 101.ToNumeral());
             Assert.AreEqual("čuođioktanuppelohkái", 111.ToNumeral());
             Assert.AreEqual("njeallječuođiguoktelogi", 420.ToNumeral());
@@ -46,6 +45,7 @@ namespace Davvisámegillii.Numerals.Tests
         public void SvonniToNumeralTest()
         {
             // Ref: [Mikael Svonni] Modern nordsamisk grammatik, 5.7.1.
+
             Assert.AreEqual("čuohti", 100.ToNumeral());
             Assert.AreEqual("čuođiokta", 101.ToNumeral());
             Assert.AreEqual("vihttačuohti", 500.ToNumeral());
