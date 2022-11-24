@@ -8,8 +8,15 @@ Converts an integer to text (i.e. numerals or ordinal numbers).
 
 579 -> vihttačuođičiežalogiovcci
 
-1723 -> 
+1723 -> duhátčiežačuođiguoktelogigolbma
 
-24th -> guokteloginjealját
+`int.MaxValue` (2147483647) -> guoktemiljárddačuođinjealljelogičiežamiljovnnanjeallječuođigávccilogigolbmaduhátguhttačuođinjealljelogičieža
 
-`int.MaxValue` -> guoktemiljárddačuođinjealljelogičiežamiljovnnanjeallječuođigávccilogigolbmaduhátguhttačuođinjealljelogičieža
+1<sup>st</sup> -> vuosttaš
+
+24<sup>th</sup> -> guokteloginjealját
+
+### TODO
+
+ - Support for ordinals is limited to <1000. 
+ - Not too sure about the implementation of *miljovnna* and *miljárdda*.
