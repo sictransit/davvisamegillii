@@ -4,7 +4,7 @@ namespace Davvisámegillii.Numerals
 {
     public static class Converter
     {
-        public static string ToNumeral(this int number)
+        public static string ToNumeral(this int number, bool adverb = false)
         {
             var parts = SplitNumber(number).ToArray();
 
@@ -59,7 +59,7 @@ namespace Davvisámegillii.Numerals
             }
         }
 
-        private static string ToText(this int n, bool plural = false, bool accusative = false) => n switch
+        private static string ToText(this int n, bool plural = false, bool accusative = false, bool adverb = false) => n switch
         {
             0 => "nolla",
             1 => "okta",
