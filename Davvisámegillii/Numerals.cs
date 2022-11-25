@@ -1,8 +1,8 @@
 ﻿using System.Text;
 
-namespace Davvisámegillii.Numerals
+namespace Davvisámegillii
 {
-    public static class Converter
+    public static class Numerals
     {
         public static string ToNumeral(this int number, bool adverb = false)
         {
@@ -11,7 +11,7 @@ namespace Davvisámegillii.Numerals
             var numeral = new StringBuilder();
 
             var plural = false;
-            for (int p = 0; p < parts.Length; p++)
+            for (var p = 0; p < parts.Length; p++)
             {
                 var n = parts[p];
                 numeral.Append(n.ToText(plural, accusative: p < parts.Length - 1, adverb: adverb && p == parts.Length - 1));
@@ -23,7 +23,7 @@ namespace Davvisámegillii.Numerals
 
         private static IEnumerable<int> SplitNumber(int n)
         {
-            if ((n < 10) || (n is > 10 and < 20))
+            if (n is < 10 or > 10 and < 20)
             {
                 yield return n;
             }
@@ -73,7 +73,7 @@ namespace Davvisámegillii.Numerals
             9 => adverb ? "ovccát" : "ovcci",
             > 10 and < 20 => (n % 10).ToText() + (adverb ? "nuppelogát" : "nuppelohkái"),
             10 => adverb ? "logát" : "logi",
-            100 => adverb ? "čuođát" : (accusative ? "čuođi" : "čuohti"),
+            100 => adverb ? "čuođát" : accusative ? "čuođi" : "čuohti",
             1_000 => "duhát",
             1_000_000 => plural ? "miljovnna" : "miljon",
             1_000_000_000 => plural ? "miljárdda" : "miljárda",

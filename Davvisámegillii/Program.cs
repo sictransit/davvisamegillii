@@ -1,14 +1,17 @@
-﻿using Davvisámegillii.Numerals;
-
-namespace Davvisámegillii
+﻿namespace Davvisámegillii
 {
-    internal class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            for (int i = 0; i <= 1000; i++)
+            for (var i = 0; i <= 1000; i++)
             {
                 Console.WriteLine($"{i}: {i.ToNumeral()} {i.ToNumeral(true)}");
+            }
+
+            for (int i = -6; i < 7; i++)
+            {
+                Console.WriteLine($"{DateTime.Today.AddDays(i):yyyy-MM-dd}: {DateTime.Today.AddDays(i).ToDate()}");
             }
         }
     }
