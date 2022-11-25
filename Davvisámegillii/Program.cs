@@ -2,11 +2,11 @@
 
 namespace Davvisámegillii
 {
-    internal class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            for (int i = 0; i <= 1000; i++)
+            for (var i = 0; i <= 1000; i++)
             {
                 Console.WriteLine($"{i}: {i.ToNumeral()} {i.ToNumeral(true)}");
             }
