@@ -1,6 +1,4 @@
-﻿using Davvisámegillii.Numerals;
-
-namespace Davvisámegillii
+﻿namespace Davvisámegillii
 {
     public static class Program
     {

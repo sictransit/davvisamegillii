@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Davvisámegillii.Numerals.Tests
+namespace Davvisámegillii.Tests
 {
     [TestClass()]
-    public class ConverterTests
+    public class NumeralsTests
     {
         [TestMethod()]
         public void ToNumeralTest()

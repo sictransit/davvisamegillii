@@ -1,8 +1,8 @@
 ﻿using System.Text;
 
-namespace Davvisámegillii.Numerals
+namespace Davvisámegillii
 {
-    public static class Converter
+    public static class Numerals
     {
         public static string ToNumeral(this int number, bool adverb = false)
         {
