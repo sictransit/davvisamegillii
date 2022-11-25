@@ -8,6 +8,11 @@
             {
                 Console.WriteLine($"{i}: {i.ToNumeral()} {i.ToNumeral(true)}");
             }
+
+            for (int i = -6; i < 7; i++)
+            {
+                Console.WriteLine($"{DateTime.Today.AddDays(i):yyyy-MM-dd}: {DateTime.Today.AddDays(i).ToDate()}");
+            }
         }
     }
 }
