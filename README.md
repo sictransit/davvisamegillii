@@ -16,6 +16,11 @@ Converts an integer to text (i.e. numerals or ordinal numbers).
 
 24<sup>th</sup> -> guokteloginjealját
 
+## Dates
+Converts a `DateTime` to text:
+
+2022-11-28 -> mánnodat skábmamánu guoktelogigávccát beaivi
+
 ### TODO
 
  - Support for ordinals is limited to <1000. 
