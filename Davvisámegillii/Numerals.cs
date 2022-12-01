@@ -4,7 +4,7 @@ namespace Davvisámegillii
 {
     public static class Numerals
     {
-        public static string ToNumeral(this int number, bool adverb = false)
+        public static string ToNumeral(this int number, bool ordinal = false)
         {
             var parts = SplitNumber(number).ToArray();
 
@@ -14,7 +14,7 @@ namespace Davvisámegillii
             for (var p = 0; p < parts.Length; p++)
             {
                 var n = parts[p];
-                numeral.Append(n.ToText(plural, accusative: p < parts.Length - 1, adverb: adverb && p == parts.Length - 1));
+                numeral.Append(n.ToText(plural, genitive: p < parts.Length - 1, ordinal: ordinal && p == parts.Length - 1));
                 plural = n > 1;
             }
 
@@ -59,21 +59,21 @@ namespace Davvisámegillii
             }
         }
 
-        private static string ToText(this int n, bool plural = false, bool accusative = false, bool adverb = false) => n switch
+        private static string ToText(this int n, bool plural = false, bool genitive = false, bool ordinal = false) => n switch
         {
             0 => "nolla",
-            1 => adverb ? "vuosttaš" : "okta",
-            2 => adverb ? "nubbi" : "guokte",
-            3 => adverb ? "goalmmát" : "golbma",
-            4 => adverb ? "njealját" : "njeallje",
-            5 => adverb ? "viđát" : "vihtta",
-            6 => adverb ? "guđát" : "guhtta",
-            7 => adverb ? "čihččet" : "čieža",
-            8 => adverb ? "gávccát" : "gávcci",
-            9 => adverb ? "ovccát" : "ovcci",
-            > 10 and < 20 => (n % 10).ToText() + (adverb ? "nuppelogát" : "nuppelohkái"),
-            10 => adverb ? "logát" : "logi",
-            100 => adverb ? "čuođát" : accusative ? "čuođi" : "čuohti",
+            1 => ordinal ? "vuosttaš" : "okta",
+            2 => ordinal ? "nubbi" : "guokte",
+            3 => ordinal ? "goalmmát" : "golbma",
+            4 => ordinal ? "njealját" : "njeallje",
+            5 => ordinal ? "viđát" : "vihtta",
+            6 => ordinal ? "guđát" : "guhtta",
+            7 => ordinal ? "čihččet" : "čieža",
+            8 => ordinal ? "gávccát" : "gávcci",
+            9 => ordinal ? "ovccát" : "ovcci",
+            > 10 and < 20 => (n % 10).ToText() + (ordinal ? "nuppelogát" : "nuppelohkái"),
+            10 => ordinal ? "logát" : "logi",
+            100 => ordinal ? "čuođát" : genitive ? "čuođi" : "čuohti",
             1_000 => "duhát",
             1_000_000 => plural ? "miljovnna" : "miljon",
             1_000_000_000 => plural ? "miljárdda" : "miljárda",

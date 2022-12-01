@@ -58,17 +58,17 @@ namespace Davvisámegillii.Tests
         [TestMethod]
         public void AdverbTest()
         {
-            Assert.AreEqual("vuosttaš", 1.ToNumeral(adverb: true));
-            Assert.AreEqual("logát", 10.ToNumeral(adverb: true));
-            Assert.AreEqual("čuođát", 100.ToNumeral(adverb: true));
+            Assert.AreEqual("vuosttaš", 1.ToNumeral(ordinal: true));
+            Assert.AreEqual("logát", 10.ToNumeral(ordinal: true));
+            Assert.AreEqual("čuođát", 100.ToNumeral(ordinal: true));
 
-            Assert.AreEqual("guoktenuppelogát", 12.ToNumeral(adverb: true));
+            Assert.AreEqual("guoktenuppelogát", 12.ToNumeral(ordinal: true));
 
-            Assert.AreEqual("guoktelogivuosttaš", 21.ToNumeral(adverb: true));
-            Assert.AreEqual("guokteloginubbi", 22.ToNumeral(adverb: true));
-            Assert.AreEqual("guoktelogigoalmmát", 23.ToNumeral(adverb: true));
-            Assert.AreEqual("guokteloginjealját", 24.ToNumeral(adverb: true));
-            Assert.AreEqual("guoktelogiviđát", 25.ToNumeral(adverb: true));
+            Assert.AreEqual("guoktelogivuosttaš", 21.ToNumeral(ordinal: true));
+            Assert.AreEqual("guokteloginubbi", 22.ToNumeral(ordinal: true));
+            Assert.AreEqual("guoktelogigoalmmát", 23.ToNumeral(ordinal: true));
+            Assert.AreEqual("guokteloginjealját", 24.ToNumeral(ordinal: true));
+            Assert.AreEqual("guoktelogiviđát", 25.ToNumeral(ordinal: true));
         }
     }
 }
