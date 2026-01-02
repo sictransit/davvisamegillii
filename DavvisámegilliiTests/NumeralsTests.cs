@@ -2,10 +2,10 @@
 
 namespace Davvisámegillii.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class NumeralsTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ToNumeralTest()
         {
             Assert.AreEqual("nolla", 0.ToNumeral());
@@ -42,7 +42,7 @@ namespace Davvisámegillii.Tests
             Assert.AreEqual("guoktemiljárddačuođinjealljelogičiežamiljovnnanjeallječuođigávccilogigolbmaduhátguhttačuođinjealljelogičieža", int.MaxValue.ToNumeral());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SvonniToNumeralTest()
         {
             // Ref: [Mikael Svonni] Modern nordsamisk grammatik, 5.7.1.

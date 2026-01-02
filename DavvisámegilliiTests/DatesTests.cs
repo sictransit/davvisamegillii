@@ -2,14 +2,14 @@
 
 namespace Davvisámegillii.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class DatesTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ToDateTest()
         {
             Assert.AreEqual("disdat juovlamánu guđát beaivi", new DateTime(2022, 12, 6).ToDate());
-            Assert.IsTrue(new DateTime(2000, 11, 29).ToDate().Contains("skábmamánu guoktelogiovccát beaivi"));
+            Assert.Contains("skábmamánu guoktelogiovccát beaivi", new DateTime(2000, 11, 29).ToDate());
 
         }
     }
