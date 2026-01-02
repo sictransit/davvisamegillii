@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Davvisámegillii.Tests
+﻿namespace net.sictransit.davvisámegillii.tests
 {
     [TestClass]
     public class NumeralsTests
